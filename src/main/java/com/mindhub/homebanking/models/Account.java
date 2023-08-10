@@ -79,7 +79,7 @@ public class Account {
         this.creationDate = creationDate;
     }
 
-    /*@Override
+   /* @Override
     public String toString() {
         return "Account{" +
                 "number='" + number + '\'' +
@@ -106,4 +106,15 @@ public void addTransaction(Transaction transaction){
         this.transactions.add(transaction);
 }
 
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", balance=" + balance +
+                ", creationDate=" + creationDate +
+                ", client=" + client +
+                ", transactions=" + transactions +
+                '}';
+    }
 }
