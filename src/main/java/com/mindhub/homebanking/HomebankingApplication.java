@@ -53,6 +53,8 @@ public class HomebankingApplication {
 
 			client.addAccount(account1);
 			client.addAccount(account2);
+			client2.addAccount(account1);
+			client2.addAccount(account2);
 
 			//Guardar la cuenta en la base de datos
 			accountRepository.save(account1);
@@ -67,12 +69,30 @@ public class HomebankingApplication {
 			transaction1.setDate(LocalDateTime.now());
 			transaction1.setDescription("McDonald's");
 
+			Transaction transaction2=new Transaction();
+			transaction2.setType(TransactionType.CREDITO);
+			transaction2.setAmount(150.00);
+			transaction2.setAccount(account1);
+			transaction2.setDate(LocalDateTime.now());
+			transaction2.setDescription("Carrefour");
+
+			Transaction transaction3=new Transaction();
+			transaction3.setType(TransactionType.CREDITO);
+			transaction3.setAmount(150.00);
+			transaction3.setAccount(account2);
+			transaction3.setDate(LocalDateTime.now());
+			transaction3.setDescription("easy");
+
 			//Agregar la transaccion
 			account1.addTransaction(transaction1);
+			account1.addTransaction(transaction2);
+			account2.addTransaction(transaction3);
 
 			//Guardar la transaction en la base de datos
 
 			transactionRepository.save(transaction1);
+			transactionRepository.save(transaction2);
+			transactionRepository.save(transaction3);
 
 		};
 	}
