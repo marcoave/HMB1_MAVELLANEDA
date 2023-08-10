@@ -2,8 +2,11 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +24,7 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,TransactionRepository transactionRepository){
 		return args -> {
 			//Crear Cliente
 			Client client = new Client ("Melba","Morel","MM@gmail.com");
@@ -40,6 +43,7 @@ public class HomebankingApplication {
 			account1.setCreationDate(LocalDate.now());
 			account1.setBalance(5000.0);
 
+
 			Account account2=new Account();
 			account2.setNumber("VIN002");
 			account2.setCreationDate(LocalDate.now().plusDays(1));
@@ -55,6 +59,20 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 
 
+			//Crear la transaccion
+			Transaction transaction1=new Transaction();
+			transaction1.setType(TransactionType.DEBITO);
+			transaction1.setAmount(-100.00);
+			transaction1.setAccount(account1);
+			transaction1.setDate(LocalDateTime.now());
+			transaction1.setDescription("McDonald's");
+
+			//Agregar la transaccion
+			account1.addTransaction(transaction1);
+
+			//Guardar la transaction en la base de datos
+
+			transactionRepository.save(transaction1);
 
 		};
 	}
