@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -20,6 +22,9 @@ public class Client {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client")
     private Set<Account> accounts  =new HashSet<>();
+
+    @OneToMany(fetch=FetchType.EAGER,mappedBy = "client")
+    private List<ClientLoan> clientLoans=new ArrayList<>();
 
     //Constructores
 
@@ -79,5 +84,9 @@ public class Client {
     public void addAccount(Account account){
         account.setClient(this);
         this.accounts.add(account);
+    }
+
+    public List<ClientLoan> getClientLoans() {
+        return clientLoans;
     }
 }

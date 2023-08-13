@@ -1,12 +1,7 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -24,7 +20,7 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,TransactionRepository transactionRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
 		return args -> {
 			//Crear Cliente
 			Client client = new Client ("Melba","Morel","MM@gmail.com");
@@ -93,6 +89,67 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction1);
 			transactionRepository.save(transaction2);
 			transactionRepository.save(transaction3);
+
+
+			//Crear el prestamo
+
+			Loan Loan1= new Loan();
+			Loan1.setName("Hipotecario");
+			Loan1.setPayments(List.of(12,24,36,48,60));
+			Loan1.setMaxAmount(500000.00);
+
+			Loan Loan2= new Loan();
+			Loan2.setName("Personal");
+			Loan2.setPayments(List.of(6,12,24));
+			Loan2.setMaxAmount(100000.00);
+
+			Loan Loan3= new Loan();
+			Loan3.setName("Automotriz");
+			Loan3.setPayments(List.of(6,12,24,36));
+			Loan3.setMaxAmount(300000.00);
+
+			//Agregar el prestamo
+
+
+			//Guardar prestamos
+
+			loanRepository.save(Loan1);
+			loanRepository.save(Loan2);
+			loanRepository.save(Loan3);
+
+			//Crear
+			ClientLoan ClientLoan1=new ClientLoan();
+			ClientLoan1.setClient(client);
+			ClientLoan1.setLoan(Loan1);
+			ClientLoan1.setAmount(400000.00);
+			ClientLoan1.setPayments(60);
+
+			ClientLoan ClientLoan2=new ClientLoan();
+			ClientLoan2.setClient(client);
+			ClientLoan2.setLoan(Loan2);
+			ClientLoan2.setAmount(50000.00);
+			ClientLoan2.setPayments(12);
+
+			ClientLoan ClientLoan3=new ClientLoan();
+			ClientLoan3.setClient(client2);
+			ClientLoan3.setLoan(Loan2);
+			ClientLoan3.setAmount(100000.00);
+			ClientLoan3.setPayments(24);
+
+			ClientLoan ClientLoan4=new ClientLoan();
+			ClientLoan4.setClient(client2);
+			ClientLoan4.setLoan(Loan3);
+			ClientLoan4.setAmount(20000.00);
+			ClientLoan4.setPayments(36);
+
+			//Guardar
+
+			clientLoanRepository.save(ClientLoan1);
+			clientLoanRepository.save(ClientLoan2);
+			clientLoanRepository.save(ClientLoan3);
+			clientLoanRepository.save(ClientLoan4);
+
+
 
 		};
 	}
