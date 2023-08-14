@@ -8,36 +8,17 @@ public class ClientLoanDTO {
     private Double amount;
     private Integer payments;
 
-    //private Client client;
+    private String name;
+     private Long loanid;
+    //private Long client_id;
 
-
-    private Long loan_id;
-    private Long client_id;
-
-
-
-
-    public ClientLoanDTO(ClientLoan clientLoanDTO){
-        id=clientLoanDTO.getId();
-        amount=clientLoanDTO.getAmount();
-        payments=clientLoanDTO.getPayments();
-        loan_id=clientLoanDTO.getClient().getId();
-        client_id= clientLoanDTO.getLoan().getId();
-
-
-
-        //clientLoanDTO=
-        //transactions= account.getTransactions().stream().map(element -> new TransactionDTO(element)).collect(Collectors.toSet());
-
+    public ClientLoanDTO(ClientLoan clientLoan) {
+        this.id = clientLoan.getId();
+        this.amount = clientLoan.getAmount();
+        this.payments = clientLoan.getPayments();
+        this.name = clientLoan.getLoan().getName();
+        this.loanid = clientLoan.getLoan().getId();
     }
-    /*public TransactionDTO(Transaction transaction) {
-        id=transaction.getId();
-        amount=transaction.getAmount();
-        description=transaction.getDescription();
-        date=transaction.getDate();
-        type=transaction.getType();
-    }*/
-
 
     public Long getId() {
         return id;
@@ -51,11 +32,25 @@ public class ClientLoanDTO {
         return payments;
     }
 
-    public Long getLoan_id() {
-        return loan_id;
+    public String getName() {
+        return name;
     }
 
-    public Long getClient_id() {
-        return client_id;
+    public Long getLoanid() {
+        return loanid;
     }
+/* public ClientLoanDTO(ClientLoan clientLoan){
+        id=clientLoanDTO.getId();
+        name=clientLoan.getLoan().getName();
+        amount=clientLoanDTO.getAmount();
+        payments=clientLoanDTO.getPayments();
+
+        loan_id=clientLoanDTO.getClient().getId();
+        client_id= clientLoanDTO.getLoan().getId();*/
+
+
+
+
+
+
 }
