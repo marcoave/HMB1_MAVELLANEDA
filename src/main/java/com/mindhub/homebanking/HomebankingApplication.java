@@ -20,7 +20,7 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository,TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return args -> {
 			//Crear Cliente
 			Client client = new Client ("Melba","Morel","MM@gmail.com");
@@ -150,6 +150,45 @@ public class HomebankingApplication {
 			clientLoanRepository.save(ClientLoan4);
 
 
+		//Crear tarjeta
+			Card card1=new Card();
+			card1.setType(CardType.DEBIT);
+			card1.setColor(CardColor.GOLD);
+			card1.setCardHolder(client.getFirstName()+" "+client.getLastName());
+			card1.setFromDate(LocalDate.now());
+			card1.setThruDate(LocalDate.now().plusYears(5));
+			card1.setCvv(123);
+			card1.setNumber("4500 2333 3664");
+
+			Card card2=new Card();
+			card2.setType(CardType.CREDIT);
+			card2.setColor(CardColor.TITANIUM);
+			card2.setCardHolder(client.getFirstName()+" "+client.getLastName());
+			card2.setFromDate(LocalDate.now());
+			card2.setThruDate(LocalDate.now().plusYears(5));
+			card2.setCvv(456);
+			card2.setNumber("4508 2308 3608");
+
+			Card card3=new Card();
+			card3.setType(CardType.CREDIT);
+			card3.setColor(CardColor.SILVER);
+			card3.setCardHolder(client2.getFirstName()+" "+client2.getLastName());
+			card3.setFromDate(LocalDate.now());
+			card3.setThruDate(LocalDate.now().plusYears(5));
+			card3.setCvv(789);
+			card3.setNumber("4509 2309 3609");
+
+			//Agregar la cuenta al cliente
+
+			client.addCard(card1);
+			client.addCard(card2);
+			client2.addCard(card3);
+
+			//Guardar la tarjeta en la base de datos
+
+			cardRepository.save(card1);
+			cardRepository.save(card2);
+			cardRepository.save(card3);
 
 		};
 	}

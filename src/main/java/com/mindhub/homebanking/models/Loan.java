@@ -5,7 +5,9 @@ import org.springframework.core.SpringVersion;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Loan {
@@ -22,8 +24,9 @@ public class Loan {
 
     @ElementCollection
     private List<Integer> payments=new ArrayList<>();
-
+    //private Set<Integer> payments=new HashSet<>();
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "loan")
+    //private Set<ClientLoan> clientLoans=new HashSet<>();
     private List<ClientLoan> clientLoans=new ArrayList<>();
 
     //Constructors
@@ -65,6 +68,9 @@ public class Loan {
     public void setPayments(List<Integer> payments) {
         this.payments = payments;
     }
+    /*public void setPayments(Set<Integer> payments) {
+        this.payments = payments;
+    }*/
 
     @Override
     public String toString() {
@@ -79,4 +85,7 @@ public class Loan {
     public List<ClientLoan> getClientLoans() {
         return clientLoans;
     }
+    /*public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }*/
 }

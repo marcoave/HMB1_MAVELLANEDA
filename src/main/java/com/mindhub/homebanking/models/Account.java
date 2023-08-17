@@ -63,14 +63,6 @@ public class Account {
         this.balance = balance;
     }
 
-    /*public String getBalance() {
-            return balance;
-        }
-
-        public void setBalance(String balance) {
-            this.balance = balance;
-        }
-    */
     public LocalDate getCreationDate() {
         return creationDate;
     }
@@ -78,15 +70,6 @@ public class Account {
     public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
-
-   /* @Override
-    public String toString() {
-        return "Account{" +
-                "number='" + number + '\'' +
-                ", balance='" + balance + '\'' +
-                ", creationDate=" + creationDate +
-                '}';
-    }*/
 
     //@JsonIgnore
     public Client getClient() {

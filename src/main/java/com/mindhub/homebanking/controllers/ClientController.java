@@ -27,13 +27,5 @@ public class ClientController {
     public ClientDTO getClient(@PathVariable Long id){
        return new ClientDTO(clientRepository.findById(id).orElse(null));
     }
-/*@RequestMapping("/clients")
-    public List<ClientDTO>getClients(){
 
-       List<Client> listClient=clientRepository.findAll();
-
-        List<ClientDTO> listClientDTO=listClient.stream().map(client -> new ClientDTO(client)).collect(Collectors.toList());
-        //return clientRepository.findAll();
-        return listClientDTO;
-    }*/
 }

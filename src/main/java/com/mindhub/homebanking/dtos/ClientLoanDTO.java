@@ -39,14 +39,7 @@ public class ClientLoanDTO {
     public Long getLoanid() {
         return loanid;
     }
-/* public ClientLoanDTO(ClientLoan clientLoan){
-        id=clientLoanDTO.getId();
-        name=clientLoan.getLoan().getName();
-        amount=clientLoanDTO.getAmount();
-        payments=clientLoanDTO.getPayments();
 
-        loan_id=clientLoanDTO.getClient().getId();
-        client_id= clientLoanDTO.getLoan().getId();*/
 
 
 
