@@ -1,13 +1,14 @@
 package com.mindhub.homebanking.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.core.SpringVersion;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
+//import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+//import java.util.Set;
 
 @Entity
 public class Loan {
@@ -40,8 +41,15 @@ public class Loan {
         this.payments = payments;
     }
 
+   /* public Loan(Long id, String name, Double maxAmount, List<Integer> payments, List<ClientLoan> clientLoans) {
+        this.id = id;
+        this.name = name;
+        this.maxAmount = maxAmount;
+        this.payments = payments;
+        this.clientLoans = clientLoans;
+    }*/
     //Métodos
-
+//@JsonIgnore
     public Long getId() {
         return id;
     }
@@ -79,6 +87,7 @@ public class Loan {
                 ", name='" + name + '\'' +
                 ", maxAmount=" + maxAmount +
                 ", payments=" + payments +
+
                 '}';
     }
 

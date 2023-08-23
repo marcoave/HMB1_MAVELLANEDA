@@ -23,7 +23,6 @@ public class AccountController {
     public List<AccountDTO>getAccountDTO(){
 
 
-        //Account account;
         return accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
     }
     @RequestMapping ("/accounts/{id}")
