@@ -30,7 +30,7 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
         auth.userDetailsService(inputName ->{
             Client client=clientRepository.findByEmail(inputName);
 
-            if(client!=null){
+                       if(client!=null){
                 return new User(client.getEmail(),client.getPassword(),
                         AuthorityUtils.createAuthorityList("CLIENT"));
 

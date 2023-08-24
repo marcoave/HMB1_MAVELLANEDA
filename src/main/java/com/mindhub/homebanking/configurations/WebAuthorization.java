@@ -22,19 +22,30 @@ public class WebAuthorization {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        //http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/accounts").hasAuthority("CLIENT");
-        http.authorizeRequests().antMatchers("/index.html", "/","h2-console","/api/clients").permitAll();
-       http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/clients").permitAll();
-        http.authorizeRequests().antMatchers("/prueba/**").hasAuthority("CLIENT");
-        http.authorizeRequests().antMatchers("/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/rest/clients").permitAll();
+        http.authorizeRequests().antMatchers("/web/index").permitAll();
+
+        /*http.authorizeRequests().antMatchers(HttpMethod.GET,"/h2-console","/rest**","/web/index").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/login").permitAll()
+                        .antMatchers(HttpMethod.GET,"/h2-console").hasAuthority("CLIENT");
+*/
+
+
+
+        //http.authorizeRequests().antMatchers("/web/index.html").permitAll();
+
+        //http.authorizeRequests().antMatchers("/accounts.html","/h2-console","/api/clients").hasAuthority("CLIENT");
+
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
+                //.loginPage("/index.html");
 
         http.logout().
-                logoutUrl("/algo/logout");
+                logoutUrl("/api/logout");
+                //logoutUrl("/api/login");
 
         /*http.formLogin()
                 .usernameParameter("email")

@@ -29,10 +29,12 @@ public class HomebankingApplication {
 			//Crear Cliente
 			Client client = new Client ("Melba","Morel","MM@gmail.com",passwordEncoder.encode("123"));
 			Client client2 = new Client ("Oreo","Moran","OM@gmail.com","456");
+			Client client3 = new Client ("ADMIN","ADMIN","AD@gmail.com",passwordEncoder.encode("ADMIN"));
 			System.out.println(client);
 			//Guardar en la base de datos el cliente
 			clientRepository.save(client);
 			clientRepository.save(client2);
+			clientRepository.save(client3);
 			System.out.println(client);
 			System.out.println(client2);
 
