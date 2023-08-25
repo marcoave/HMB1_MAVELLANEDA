@@ -28,7 +28,7 @@ public class HomebankingApplication {
 		return args -> {
 			//Crear Cliente
 			Client client = new Client ("Melba","Morel","MM@gmail.com",passwordEncoder.encode("123"));
-			Client client2 = new Client ("Oreo","Moran","OM@gmail.com","456");
+			Client client2 = new Client ("Oreo","Moran","OM@gmail.com",passwordEncoder.encode("456"));
 			Client client3 = new Client ("ADMIN","ADMIN","AD@gmail.com",passwordEncoder.encode("ADMIN"));
 			System.out.println(client);
 			//Guardar en la base de datos el cliente
@@ -54,8 +54,8 @@ public class HomebankingApplication {
 			//Agrega la cuenta al cliente
 
 			client.addAccount(account1);
-			client.addAccount(account2);
-			client2.addAccount(account1);
+			//client.addAccount(account2);
+			//client2.addAccount(account1);
 			client2.addAccount(account2);
 
 			//Guardar la cuenta en la base de datos

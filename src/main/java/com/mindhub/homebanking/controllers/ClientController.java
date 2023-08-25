@@ -35,7 +35,7 @@ public class ClientController {
 //---
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-    // @RequestMapping(path = "/api/clients",method = RequestMethod.POST)
+     //@RequestMapping(path = "/api/clients",method = RequestMethod.POST)
 
     public ResponseEntity<Object> register (
             @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email,
@@ -52,13 +52,10 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-@RequestMapping("/api/clients/current")
-    public Client getClient(Authentication authentication){
-        return clientRepository.findByEmail(authentication.getName());
+@RequestMapping("/clients/current")
+    public ClientDTO getClient(Authentication authentication){
+        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
 }
 
-   /* @RequestMapping("api/clients/current}")
-    public ClientDTO getClient(Authentication authentication) {
-        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
-    }*/
+
 }

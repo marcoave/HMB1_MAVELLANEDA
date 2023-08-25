@@ -22,51 +22,46 @@ public class WebAuthorization {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.authorizeRequests().antMatchers("/rest/clients").permitAll();
-        http.authorizeRequests().antMatchers("/web/index").permitAll();
+        http.authorizeRequests()
+                                .antMatchers(HttpMethod.GET,"/web/index").permitAll()
+                                .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
+                                .antMatchers(HttpMethod.GET,"/api/clients").hasAuthority("ADMIN")
+                                .antMatchers(HttpMethod.GET,"/web/accounts/current").hasAuthority("CLIENT")
+                                .antMatchers(HttpMethod.GET,"/api/client/current").hasAnyAuthority("ADMIN","CLIENT")
+                                .antMatchers(HttpMethod.GET,"/h2-console").hasAnyAuthority("ADMIN")
+                                .antMatchers(HttpMethod.GET,"/rest/**").hasAnyAuthority("ADMIN");
 
-        /*http.authorizeRequests().antMatchers(HttpMethod.GET,"/h2-console","/rest**","/web/index").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/login").permitAll()
-                        .antMatchers(HttpMethod.GET,"/h2-console").hasAuthority("CLIENT");
-*/
-
-
-
-        //http.authorizeRequests().antMatchers("/web/index.html").permitAll();
-
-        //http.authorizeRequests().antMatchers("/accounts.html","/h2-console","/api/clients").hasAuthority("CLIENT");
 
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
-                //.loginPage("/index.html");
+
 
         http.logout().
                 logoutUrl("/api/logout");
-                //logoutUrl("/api/login");
-
-        /*http.formLogin()
-                .usernameParameter("email")
-                .passwordParameter("pasword")
-                .loginPage("/accounts");
-
-        http.logout().
-                logoutUrl("/index");*/
 
 
-        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
 
-        http.headers().frameOptions().disable();
-
+        // turn off checking for CSRF tokens
         http.csrf().disable();
 
+        //disabling frameOptions so h2-console can be accessed
+       http.headers().frameOptions().disable();
+
+        // if user is not authenticated, just send an authentication failure response
+        http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+
+        // if login is successful, just clear the flags asking for authentication
         http.formLogin().successHandler((req, res, auth) -> clearAuthenticationAttributes(req));
 
+        // if login fails, just send an authentication failure response
         http.formLogin().failureHandler((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
 
-        http.exceptionHandling().authenticationEntryPoint((req, res, exc) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED));
+        // if logout is successful, just send a success response
+        http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
+
 
         return http.build();
         }
