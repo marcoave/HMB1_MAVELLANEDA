@@ -23,12 +23,12 @@ public class WebAuthorization {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                                .antMatchers(HttpMethod.GET,"/web/index").permitAll()
+
                                 .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
                                 .antMatchers(HttpMethod.GET,"/api/clients").hasAuthority("ADMIN")
                                 .antMatchers(HttpMethod.GET,"/web/accounts/current").hasAuthority("CLIENT")
                                 .antMatchers(HttpMethod.GET,"/api/client/current").hasAnyAuthority("ADMIN","CLIENT")
-                                .antMatchers(HttpMethod.GET,"/h2-console").hasAnyAuthority("ADMIN")
+                                .antMatchers(HttpMethod.GET,"/h2-console/**").hasAuthority("ADMIN")
                                 .antMatchers(HttpMethod.GET,"/rest/**").hasAnyAuthority("ADMIN");
 
 
