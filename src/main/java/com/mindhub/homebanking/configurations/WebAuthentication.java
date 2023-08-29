@@ -33,10 +33,10 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
             if (client != null) {
                 if ("AD@gmail.com".equals(inputName)) {
                     return new User("AD@gmail.com", client.getPassword(),
-                            AuthorityUtils.createAuthorityList("ADMIN")); // Cambio en el rol
+                            AuthorityUtils.createAuthorityList("ADMIN"));
                 } else {
                     return new User(client.getEmail(), client.getPassword(),
-                            AuthorityUtils.createAuthorityList("CLIENT")); // Cambio en el rol
+                            AuthorityUtils.createAuthorityList("CLIENT"));
                 }
             } else {
                 throw new UsernameNotFoundException("Usuario no encontrado");
