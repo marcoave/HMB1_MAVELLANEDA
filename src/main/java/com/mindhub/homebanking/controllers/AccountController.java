@@ -23,26 +23,41 @@ public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
     private ClientDTO clientDTO;
+
     private ClientRepository clientRepository;
 
-    @RequestMapping ("/accounts")
+    @RequestMapping("/accounts")
 
-    public List<AccountDTO>getAccountDTO(){
+    public List<AccountDTO> getAccountDTO() {
 
         return accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
     }
-    @RequestMapping ("/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id){
+
+    @RequestMapping("/accounts/{id}")
+    public AccountDTO getAccount(@PathVariable Long id) {
         return new AccountDTO(accountRepository.findById(id).orElse(null));
     }
+
+    //@RequestMapping  ("/clients/current/accounts")
+    /*@RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    public ResponseEntity<String> createAccount(Authentication authentication) {
+        Client clientDTO = clientRepository.findByEmail(authentication.getName());
+
+        if (clientDTO.getAccounts().size() >= 3) {
+            return new ResponseEntity<>("Máximo tres cuentas", HttpStatus.FORBIDDEN);
+        }
+        return null;
+    }*/
+
+}
 //----------
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    /*@RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
 
-//----
+
     public ResponseEntity<Object> createAccount (Authentication authentication){
-        Client clientDTO= clientRepository.findByEmail(authentication.getName());
+        Client client= clientRepository.findByEmail(authentication.getName());
 
-if (clientDTO.getAccounts().size() >=3) {
+if (client.getAccounts().size() >=3) {
     return new ResponseEntity<>("Faltan Datos", HttpStatus.FORBIDDEN);
 }
         // Generar un número de cuenta aleatorio
@@ -53,20 +68,15 @@ if (clientDTO.getAccounts().size() >=3) {
         newAccount.setNumber(accountNumber);
         newAccount.setBalance(0.0);
         newAccount.setCreationDate(LocalDate.now());
-        newAccount.setClient(clientDTO);
-
-
+        newAccount.setClient(client);
+        client.addAccount(newAccount);
+        System.out.println(newAccount);
         // Guardar la cuenta en el repositorio
         accountRepository.save(newAccount);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-        // Generar número de cuenta aleatorio
-    /*private String generateAccountNumber() {
-        Random random = new Random();
-        int accountSuffix = random.nextInt(99999999); // Máximo 8 dígitos
-        return "VIN-" + String.format("%08d", accountSuffix);
-    }*/
+
 
     private String generateAccountNumber(){
         return "VIN-"+ String.format("%80d",getRandomNumber(1,99999999));
@@ -77,7 +87,12 @@ if (clientDTO.getAccounts().size() >=3) {
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
 
-    }
 
 
-}
+    }*/
+    /*@RequestMapping("/clients/current/account")
+    public ClientDTO getClient(Authentication authentication){
+        return new ClientDTO(clientRepository.findByEmail(authentication.getName()));
+    }*/
+
+
